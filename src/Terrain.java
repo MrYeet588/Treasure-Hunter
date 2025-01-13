@@ -48,4 +48,5 @@ public class Terrain {
     public String infoString() {
         return "You are surrounded by " + terrainName + " which needs a(n) " + neededItem + " to cross.";
     }
+
 }
