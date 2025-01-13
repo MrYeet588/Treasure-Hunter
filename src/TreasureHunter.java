@@ -33,7 +33,10 @@ public class TreasureHunter {
     public void play() {
         welcomePlayer();
         enterTown();
-        showMenu();
+        while (hunter.getGold() > 0) {
+            showMenu();
+        }
+        System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
     }
 
     /**
