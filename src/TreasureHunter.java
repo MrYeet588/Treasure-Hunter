@@ -135,4 +135,5 @@ public class TreasureHunter {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
     }
+
 }
