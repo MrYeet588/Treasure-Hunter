@@ -121,7 +121,8 @@ public class TreasureHunter {
                 System.out.println("(E)xplore surrounding terrain.");
                 System.out.println("(M)ove on to a different town.");
                 System.out.println("(L)ook for trouble!");
-                System.out.println("(H)unt for treasure");
+                System.out.println("(H)unt for treasure.");
+                System.out.println("(D)ig for gold.");
                 System.out.println("Give up the hunt and e(X)it.");
                 System.out.println();
                 System.out.print("What's your next move? ");
@@ -167,6 +168,25 @@ public class TreasureHunter {
                 }
             }
             System.out.println("You have already searched this town");
+        } else if(choice.equals("d")) {
+            int count = 0;
+            while (count <= 1){
+                if(hunter.hasItemInKit("Shovel")){
+                    double chance = Math.random() * 2 + 1;
+                    if(chance == 1){
+                        int gold = (int) (Math.random() * 20) + 1;
+                        System.out.println("You dug up " + gold + " gold!");
+                        hunter.changeGold(gold);
+                        count++;
+                    } else {
+                        System.out.println("You dug but only found dirt");
+                        count++;
+                    }
+                } else {
+                    System.out.println("You can't dig for gold without a shovel");
+                }
+            }
+            System.out.println("You already dug for gold in this town.");
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else {
