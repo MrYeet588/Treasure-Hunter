@@ -152,13 +152,12 @@ public class TreasureHunter {
             int count = 0;
             String treasure = currentTown.getTreasure();
             while (count <= 1){
-                if(hunter.hasItemInKit(treasure)){
+                if(hunter.hasItemInTreasureList(treasure)){
                     System.out.println("You have already collected this treasure");
                 } else {
                     if (!treasure.equals("dust")) {
-                        System.out.println("You found a " + treasure + "!");
-                        hunter.buyItem(treasure, 1);
-                        hunter.changeGold(1);
+                        System.out.println("You found a " + Colors.GREEN + treasure + Colors.RESET + "!");
+                        hunter.addTreasures(treasure);
                         count++;
                     } else {
                         System.out.println("You found dust!");
