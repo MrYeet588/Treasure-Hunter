@@ -113,6 +113,21 @@ public class Town {
         }
     }
 
+
+    public String getTreasure(){
+        String treasure = "";
+        double num = Math.random() * 4 + 1;
+        if (num == 1){
+            treasure = "crown";
+        } else if (num == 2){
+            treasure = "trophy";
+        } else if (num == 3){
+            treasure = "gem";
+        } else {
+            treasure = "dust";
+        }
+        return treasure;
+    }
     public String infoString() {
         return "This nice little town is surrounded by " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET + ".";
     }
