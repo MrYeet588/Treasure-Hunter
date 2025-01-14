@@ -33,10 +33,7 @@ public class TreasureHunter {
     public void play() {
         welcomePlayer();
         enterTown();
-        while (hunter.getGold() > 0) {
-            showMenu();
-        }
-        System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
+        showMenu();
     }
 
     /**
@@ -104,23 +101,24 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
-        while (!choice.equals("x")) {
+        while (!choice.equals("x") || hunter.getGold() > 0) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
-            System.out.println("***");
-            System.out.println(hunter.infoString());
-            System.out.println(currentTown.infoString());
-            System.out.println("(B)uy something at the shop.");
-            System.out.println("(S)ell something at the shop.");
-            System.out.println("(E)xplore surrounding terrain.");
-            System.out.println("(M)ove on to a different town.");
-            System.out.println("(L)ook for trouble!");
-            System.out.println("Give up the hunt and e(X)it.");
-            System.out.println();
-            System.out.print("What's your next move? ");
-            choice = SCANNER.nextLine().toLowerCase();
-            processChoice(choice);
+                System.out.println("***");
+                System.out.println(hunter.infoString());
+                System.out.println(currentTown.infoString());
+                System.out.println("(B)uy something at the shop.");
+                System.out.println("(S)ell something at the shop.");
+                System.out.println("(E)xplore surrounding terrain.");
+                System.out.println("(M)ove on to a different town.");
+                System.out.println("(L)ook for trouble!");
+                System.out.println("Give up the hunt and e(X)it.");
+                System.out.println();
+                System.out.print("What's your next move? ");
+                choice = SCANNER.nextLine().toLowerCase();
+                processChoice(choice);
         }
+        end();
     }
 
     /**
@@ -145,6 +143,9 @@ public class TreasureHunter {
         } else {
             System.out.println("Yikes! That's an invalid option! Try again.");
         }
+    }
+    private void end(){
+        System.out.println("Fare thee well, " + hunter.getHunterName() + ", you are out of money!");
     }
 
 }
