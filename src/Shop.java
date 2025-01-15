@@ -8,14 +8,14 @@ import java.util.Scanner;
 
 public class Shop {
     // constants
-    private static final int WATER_COST = 2;
-    private static final int ROPE_COST = 4;
-    private static final int MACHETE_COST = 6;
-    private static final int HORSE_COST = 12;
-    private static final int BOAT_COST = 20;
-    private static final int BOOTS_COST = 10;
-    private static final int SHOVEL_COST = 8;
-    private static final int SWORD_COST = 0;
+    private int waterCost = 2;
+    private int ropeCost = 4;
+    private int macheteCost = 6;
+    private int horseCost = 12;
+    private int boatCost = 20;
+    private int bootsCost = 10;
+    private int shovelCost = 8;
+    private int swordCost = 0;
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
 
@@ -30,10 +30,10 @@ public class Shop {
      *
      * @param markdown Percentage of markdown for selling items in decimal format.
      */
-    public Shop(double markdown) {
+    public Shop(double markdown, boolean isSamuraiMode) {
         this.markdown = markdown;
         customer = null; // customer is set in the enter method
-        isSamuraiMode = false;
+        this.isSamuraiMode = isSamuraiMode;
     }
 
     /**
@@ -45,6 +45,7 @@ public class Shop {
      */
     public String enter(Hunter hunter, String buyOrSell) {
         customer = hunter;
+
         if (buyOrSell.equals("b")) {
             System.out.println("Welcome to the shop! We have the finest wares in town.");
             System.out.println("Currently we have the following items:");
@@ -53,13 +54,18 @@ public class Shop {
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
             if (cost == 0) {
-                if(item.equals("Sword")){
+                if(item.equals("sword")){
                     System.out.print("It'll cost you 0 gold. Buy it (y/n)? ");
                     String option = SCANNER.nextLine().toLowerCase();
                     if (option.equals("y")) {
                         buyItem(item);
                     }
                 } else {
+                    System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
+                    String option = SCANNER.nextLine().toLowerCase();
+                    if (option.equals("y")) {
+                        buyItem(item);
+                    }
                     System.out.println("We ain't got none of those.");
                 }
             } else {
@@ -95,24 +101,43 @@ public class Shop {
      */
     public String inventory() {
         if(isSamuraiMode){
-            String str = "Water: " + WATER_COST + " gold\n";
-            str += "Rope: " + ROPE_COST + " gold\n";
-            str += "Machete: " + MACHETE_COST + " gold\n";
-            str += "Horse: " + HORSE_COST + " gold\n";
-            str += "Boat: " + BOAT_COST + " gold\n";
-            str += "Boots: " + BOOTS_COST + " gold\n";
-            str += "Shovel: " + SHOVEL_COST + " gold\n";
-            str += "Sword: " + SWORD_COST + " gold\n";
+            if(customer.hasItemInKit("sword")){
+                waterCost = 0;
+                ropeCost = 0;
+                macheteCost = 0;
+                horseCost = 0;
+                boatCost = 0;
+                bootsCost = 0;
+                shovelCost = 0;
+                String str = "Water: " + waterCost + " gold\n";
+                str += "Rope: " + ropeCost + " gold\n";
+                str += "Machete: " + macheteCost + " gold\n";
+                str += "Horse: " + horseCost + " gold\n";
+                str += "Boat: " + boatCost + " gold\n";
+                str += "Boots: " + bootsCost + " gold\n";
+                str += "Shovel: " + shovelCost + " gold\n";
+                return str;
+            } else {
+                String str = "Water: " + waterCost + " gold\n";
+                str += "Rope: " + ropeCost + " gold\n";
+                str += "Machete: " + macheteCost + " gold\n";
+                str += "Horse: " + horseCost + " gold\n";
+                str += "Boat: " + boatCost + " gold\n";
+                str += "Boots: " + bootsCost + " gold\n";
+                str += "Shovel: " + shovelCost + " gold\n";
+                str += "Sword: " + swordCost + " gold\n";
+                return str;
+            }
+        } else {
+            String str = "Water: " + waterCost + " gold\n";
+            str += "Rope: " + ropeCost + " gold\n";
+            str += "Machete: " + macheteCost + " gold\n";
+            str += "Horse: " + horseCost + " gold\n";
+            str += "Boat: " + boatCost + " gold\n";
+            str += "Boots: " + bootsCost + " gold\n";
+            str += "Shovel: " + shovelCost + " gold\n";
             return str;
         }
-        String str = "Water: " + WATER_COST + " gold\n";
-        str += "Rope: " + ROPE_COST + " gold\n";
-        str += "Machete: " + MACHETE_COST + " gold\n";
-        str += "Horse: " + HORSE_COST + " gold\n";
-        str += "Boat: " + BOAT_COST + " gold\n";
-        str += "Boots: " + BOOTS_COST + " gold\n";
-        str += "Shovel: " + SHOVEL_COST + " gold\n";
-        return str;
     }
 
     /**
@@ -166,19 +191,19 @@ public class Shop {
      */
     public int getCostOfItem(String item) {
         if (item.equals("water")) {
-            return WATER_COST;
+            return waterCost;
         } else if (item.equals("rope")) {
-            return ROPE_COST;
+            return ropeCost;
         } else if (item.equals("machete")) {
-            return MACHETE_COST;
+            return macheteCost;
         } else if (item.equals("horse")) {
-            return HORSE_COST;
+            return horseCost;
         } else if (item.equals("boat")) {
-            return BOAT_COST;
+            return boatCost;
         } else if (item.equals("boots")){
-            return BOOTS_COST;
+            return bootsCost;
         } else if (item.equals("shovel")){
-            return SHOVEL_COST;
+            return shovelCost;
         } else {
             return 0;
         }
