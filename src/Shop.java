@@ -30,10 +30,10 @@ public class Shop {
      *
      * @param markdown Percentage of markdown for selling items in decimal format.
      */
-    public Shop(double markdown) {
+    public Shop(double markdown, boolean isSamuraiMode) {
         this.markdown = markdown;
         customer = null; // customer is set in the enter method
-        isSamuraiMode = false;
+        this.isSamuraiMode = isSamuraiMode;
     }
 
     /**
@@ -54,13 +54,18 @@ public class Shop {
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
             if (cost == 0) {
-                if(item.equals("Sword")){
+                if(item.equals("sword")){
                     System.out.print("It'll cost you 0 gold. Buy it (y/n)? ");
                     String option = SCANNER.nextLine().toLowerCase();
                     if (option.equals("y")) {
                         buyItem(item);
                     }
                 } else {
+                    System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
+                    String option = SCANNER.nextLine().toLowerCase();
+                    if (option.equals("y")) {
+                        buyItem(item);
+                    }
                     System.out.println("We ain't got none of those.");
                 }
             } else {
@@ -96,7 +101,7 @@ public class Shop {
      */
     public String inventory() {
         if(isSamuraiMode){
-            if(customer.hasItemInKit("Sword")){
+            if(customer.hasItemInKit("sword")){
                 waterCost = 0;
                 ropeCost = 0;
                 macheteCost = 0;
@@ -111,7 +116,6 @@ public class Shop {
                 str += "Boat: " + boatCost + " gold\n";
                 str += "Boots: " + bootsCost + " gold\n";
                 str += "Shovel: " + shovelCost + " gold\n";
-                str += "Sword: " + swordCost + " gold\n";
                 return str;
             } else {
                 String str = "Water: " + waterCost + " gold\n";
