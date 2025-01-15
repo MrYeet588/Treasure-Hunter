@@ -162,6 +162,8 @@ public class Hunter {
         }
         if(!treasuresIsEmpty()){
             str += "\nyou have collected " + Colors.GREEN + getTreasures() + Colors.RESET;
+        }else{
+            str += "\nyou have collected " + Colors.GREEN + "0" + Colors.RESET + " treasures.";
         }
 
         return str;
