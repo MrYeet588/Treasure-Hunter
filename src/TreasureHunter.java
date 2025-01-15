@@ -18,7 +18,8 @@ public class TreasureHunter {
     private boolean hardMode;
     private  boolean easyMode;
     private boolean samuraiMode;
-
+    private int count = 0;
+    private int countForGold = 0;
     /**
      * Constructs the Treasure Hunter game.
      */
@@ -153,14 +154,17 @@ public class TreasureHunter {
                 // This town is going away so print its news ahead of time.
                 System.out.println(currentTown.getLatestNews());
                 enterTown();
+                count = 0;
             }
         } else if (choice.equals("l")) {
             currentTown.lookForTrouble();
         } else if (choice.equals("h")) {
-            int count = 0;
+            if (count == 1) {
+                System.out.println("You have already searched this town");
+            }
             String treasure = currentTown.getTreasure();
-            while (count <= 1){
-                if(hunter.hasItemInTreasureList(treasure)){
+            while (count < 1) {
+                if (hunter.hasItemInTreasureList(treasure)) {
                     System.out.println("You have already collected this treasure");
                 } else {
                     if (!treasure.equals("dust")) {
@@ -173,26 +177,25 @@ public class TreasureHunter {
                     }
                 }
             }
-            System.out.println("You have already searched this town");
-        } else if(choice.equals("d")) {
-            int count = 0;
-            while (count <= 1){
-                if(hunter.hasItemInKit("Shovel")){
-                    double chance = Math.random() * 2 + 1;
-                    if(chance == 1){
-                        int gold = (int) (Math.random() * 20) + 1;
-                        System.out.println("You dug up " + gold + " gold!");
-                        hunter.changeGold(gold);
-                        count++;
-                    } else {
-                        System.out.println("You dug but only found dirt");
-                        count++;
-                    }
+        } else if (choice.equals("d")) {
+            if (countForGold == 1) {
+                System.out.println("You already dug for gold in this town");
+            }
+            if(!hunter.hasItemInKit("Shovel")){
+                System.out.println("You can't dig for gold without a shovel");
+            }
+            while (countForGold < 1 && hunter.hasItemInKit("Shovel")) {
+                double chance = Math.random() * 2 + 1;
+                if (chance == 1) {
+                    int gold = (int) (Math.random() * 20) + 1;
+                    System.out.println("You dug up " + gold + " gold!");
+                    hunter.changeGold(gold);
+                    countForGold++;
                 } else {
-                    System.out.println("You can't dig for gold without a shovel");
+                    System.out.println("You dug but only found dirt");
+                    countForGold++;
                 }
             }
-            System.out.println("You already dug for gold in this town.");
         } else if (choice.equals("x")) {
             System.out.println("Fare thee well, " + hunter.getHunterName() + "!");
         } else {
