@@ -90,6 +90,9 @@ public class TreasureHunter {
             toughness = 0.75;
         }
 
+        if(samuraiMode){
+            toughness = 0;
+        }
         // note that we don't need to access the Shop object
         // outside of this method, so it isn't necessary to store it as an instance
         // variable; we can leave it as a local variable
