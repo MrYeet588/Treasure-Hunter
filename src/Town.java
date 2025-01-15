@@ -117,7 +117,6 @@ public class Town {
         }
     }
 
-
     public String getTreasure(){
         String treasure = "";
         double num = Math.random() * 4 + 1;
@@ -132,6 +131,7 @@ public class Town {
         }
         return treasure;
     }
+    
     public String infoString() {
         return "This nice little town is surrounded by " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET + ".";
     }

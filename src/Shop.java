@@ -15,12 +15,15 @@ public class Shop {
     private static final int BOAT_COST = 20;
     private static final int BOOTS_COST = 10;
     private static final int SHOVEL_COST = 8;
+    private static final int SWORD_COST = 0;
     // static variables
     private static final Scanner SCANNER = new Scanner(System.in);
 
     // instance variables
     private double markdown;
     private Hunter customer;
+    private Boolean isSamuraiMode;
+
 
     /**
      * The Shop constructor takes in a markdown value and leaves customer null until one enters the shop.
@@ -30,6 +33,7 @@ public class Shop {
     public Shop(double markdown) {
         this.markdown = markdown;
         customer = null; // customer is set in the enter method
+        isSamuraiMode = false;
     }
 
     /**
@@ -49,7 +53,15 @@ public class Shop {
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
             if (cost == 0) {
-                System.out.println("We ain't got none of those.");
+                if(item.equals("Sword")){
+                    System.out.print("It'll cost you 0 gold. Buy it (y/n)? ");
+                    String option = SCANNER.nextLine().toLowerCase();
+                    if (option.equals("y")) {
+                        buyItem(item);
+                    }
+                } else {
+                    System.out.println("We ain't got none of those.");
+                }
             } else {
                 System.out.print("It'll cost you " + cost + " gold. Buy it (y/n)? ");
                 String option = SCANNER.nextLine().toLowerCase();
@@ -82,6 +94,17 @@ public class Shop {
      * @return the string representing the shop's items available for purchase and their prices.
      */
     public String inventory() {
+        if(isSamuraiMode){
+            String str = "Water: " + WATER_COST + " gold\n";
+            str += "Rope: " + ROPE_COST + " gold\n";
+            str += "Machete: " + MACHETE_COST + " gold\n";
+            str += "Horse: " + HORSE_COST + " gold\n";
+            str += "Boat: " + BOAT_COST + " gold\n";
+            str += "Boots: " + BOOTS_COST + " gold\n";
+            str += "Shovel: " + SHOVEL_COST + " gold\n";
+            str += "Sword: " + SWORD_COST + " gold\n";
+            return str;
+        }
         String str = "Water: " + WATER_COST + " gold\n";
         str += "Rope: " + ROPE_COST + " gold\n";
         str += "Machete: " + MACHETE_COST + " gold\n";
@@ -171,5 +194,6 @@ public class Shop {
         int cost = (int) (getCostOfItem(item) * markdown);
         return cost;
     }
+
 
 }
