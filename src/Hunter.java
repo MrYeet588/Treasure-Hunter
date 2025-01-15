@@ -236,4 +236,11 @@ public class Hunter {
         }
         return printableTreasure;
     }
+    public boolean hasAllTreasures(){
+        if(hasItemInTreasureList("crown") && hasItemInTreasureList("gem") && hasItemInTreasureList("trophy")){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
