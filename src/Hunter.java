@@ -160,6 +160,11 @@ public class Hunter {
         if (!kitIsEmpty()) {
             str += " and " + Colors.PURPLE + getInventory() + Colors.RESET;
         }
+        if(!treasuresIsEmpty()){
+            str += "\nyou have collected " + Colors.GREEN + getTreasures() + Colors.RESET;
+        }else{
+            str += "\nyou have collected " + Colors.GREEN + "0" + Colors.RESET + " treasures.";
+        }
 
         return str;
     }
@@ -194,6 +199,14 @@ public class Hunter {
         }
         return true;
     }
+    private boolean treasuresIsEmpty() {
+        for (String string : treasures) {
+            if (string != null) {
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * Finds the first index where there is a null value.
@@ -211,5 +224,23 @@ public class Hunter {
     public void addTreasures(String newTreasure){
         int idx = emptyPositionInKit();
         treasures[idx] = newTreasure;
+    }
+    public String getTreasures() {
+        String printableTreasure = "";
+        String space = " ";
+
+        for (String item : treasures) {
+            if (item != null) {
+                printableTreasure += item + space;
+            }
+        }
+        return printableTreasure;
+    }
+    public boolean hasAllTreasures(){
+        if(hasItemInTreasureList("crown") && hasItemInTreasureList("gem") && hasItemInTreasureList("trophy")){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
