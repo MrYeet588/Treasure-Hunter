@@ -104,29 +104,33 @@ public class Town {
         if (Math.random() > noTroubleChance) {
             printMessage = "You couldn't find any trouble";
         } else {
-            printMessage = Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n";
+            System.out.print(Colors.RED + "You want trouble, stranger!  You got it!\nOof! Umph! Ow!\n");
             int goldDiff = (int) (Math.random() * 10) + 1;
             if (Math.random() > noTroubleChance) {
                 if(hunter.hasItemInKit("sword")){
-                    printMessage += "The braweler, seeing your sword, made him realize that he needs to do better\n";
-                    printMessage += "He couldn't win this fight, so he gave you his gold";
-                    printMessage += "\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET;
+                    System.out.print("The braweler, seeing your sword, made him realize that he needs to do better\n");
+                    System.out.print("He couldn't win this fight, so he gave you his gold");
+                    System.out.print("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET);
                     hunter.changeGold(goldDiff);
+                    printMessage += "You won, nice.";
                 } else {
-                    printMessage += "Okay, stranger! You proved yer mettle. Here, take my gold.";
-                    printMessage += "\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET;
+                    System.out.print("Okay, stranger! You proved yer mettle. Here, take my gold.");
+                    System.out.print("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET);
                     hunter.changeGold(goldDiff);
+                    printMessage += "You won, nice.";
                 }
             } else {
                 if(hunter.hasItemInKit("Sword")){
-                    printMessage += "The braweler, seeing your sword, made him realize that he needs to do better\n";
-                    printMessage += "He couldn't win this fight, so he gave you his gold";
-                    printMessage += "\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET;
+                    System.out.print("The braweler, seeing your sword, made him realize that he needs to do better\n");
+                    System.out.print("He couldn't win this fight, so he gave you his gold");
+                    System.out.print("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET);
                     hunter.changeGold(goldDiff);
+                    printMessage += "You won, nice.";
                 } else {
-                    printMessage += "That'll teach you to go lookin' fer trouble in MY town! Now pay up!";
-                    printMessage += "\nYou lost the brawl and pay " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET;
+                    System.out.print("That'll teach you to go lookin' fer trouble in MY town! Now pay up!");
+                    System.out.print("\nYou lost the brawl and pay " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET);
                     hunter.changeGold(-goldDiff);
+                    printMessage += "\n You're weak.";
                 }
             }
         }
