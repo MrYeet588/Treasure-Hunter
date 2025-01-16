@@ -21,7 +21,7 @@ public class TreasureHunter {
     private boolean samuraiMode;
     private int count = 0;
     private int countForGold = 0;
-    private OutputWindow window = new OutputWindow();
+    private OutputWindow window;
     /**
      * Constructs the Treasure Hunter game.
      */
@@ -32,6 +32,7 @@ public class TreasureHunter {
         hardMode = false;
         easyMode = false;
         samuraiMode = false;
+        window = new OutputWindow();
     }
 
     /**

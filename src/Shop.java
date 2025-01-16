@@ -53,18 +53,18 @@ public class Shop {
             window.addTextToWindow("\nWelcome to the shop! We have the finest wares in town.", Color.BLACK);
             window.addTextToWindow("\nCurrently we have the following items:", Color.BLACK);
             window.addTextToWindow(inventory(), Color.BLACK);
-            window.addTextToWindow("What're you lookin' to buy? ", Color.BLUE);
+            window.addTextToWindow("\nWhat're you lookin' to buy? ", Color.BLUE);
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
             if (cost == 0) {
                 if(item.equals("sword")){
-                    window.addTextToWindow("It'll cost you 0 gold. Buy it (y/n)? ", Color.BLUE);
+                    window.addTextToWindow("\nIt'll cost you 0 gold. Buy it (y/n)? ", Color.BLUE);
                     String option = SCANNER.nextLine().toLowerCase();
                     if (option.equals("y")) {
                         buyItem(item);
                     }
                 } else {
-                    window.addTextToWindow("It'll cost you " + cost + " gold. Buy it (y/n)? ", Color.BLUE);
+                    window.addTextToWindow("\nIt'll cost you " + cost + " gold. Buy it (y/n)? ", Color.BLUE);
                     String option = SCANNER.nextLine().toLowerCase();
                     if (option.equals("y")) {
                         buyItem(item);
@@ -72,7 +72,7 @@ public class Shop {
                     window.addTextToWindow("\nWe ain't got none of those.", Color.BLUE);
                 }
             } else {
-                window.addTextToWindow(("It'll cost you " + Colors.YELLOW + cost + " gold" + Colors.RESET + ". Buy it (y/n)? "), Color.BLUE);
+                window.addTextToWindow(("\nIt'll cost you " + Colors.YELLOW + cost + " gold" + Colors.RESET + ". Buy it (y/n)? "), Color.BLUE);
                 String option = SCANNER.nextLine().toLowerCase();
                 if (option.equals("y")) {
                     buyItem(item);
@@ -80,13 +80,13 @@ public class Shop {
             }
         } else {
             window.addTextToWindow("\nWhat're you lookin' to sell? ", Color.BLUE);
-            window.addTextToWindow(("You currently have the following items: " + customer.getInventory()), Color.BLUE);
+            window.addTextToWindow(("\nYou currently have the following items: " + customer.getInventory()), Color.BLUE);
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, false);
             if (cost == 0) {
                 window.addTextToWindow("\nWe don't want none of those.", Color.BLUE);
             } else {
-                window.addTextToWindow("It'll get you " + cost + " gold. Sell it (y/n)? ", Color.BLUE);
+                window.addTextToWindow("\nIt'll get you " + cost + " gold. Sell it (y/n)? ", Color.BLUE);
                 String option = SCANNER.nextLine().toLowerCase();
                 if (option.equals("y")) {
                     sellItem(item);
