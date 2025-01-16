@@ -118,7 +118,7 @@ public class TreasureHunter {
      */
     private void showMenu() {
         String choice = "";
-        while (!choice.equals("x") || hunter.getGold() > 0 || !hunter.hasAllTreasures()) {
+        while (!choice.equals("x") && hunter.getGold() > 0 && !hunter.hasAllTreasures()) {
             System.out.println();
             System.out.println(currentTown.getLatestNews());
                 System.out.println("***");
@@ -155,45 +155,38 @@ public class TreasureHunter {
                 System.out.println(currentTown.getLatestNews());
                 enterTown();
                 count = 0;
+                countForGold = 0;
             }
         } else if (choice.equals("l")) {
             currentTown.lookForTrouble();
         } else if (choice.equals("h")) {
             if (count == 1) {
                 System.out.println("You have already searched this town");
-            }
-            String treasure = currentTown.getTreasure();
-            while (count < 1) {
-                if (hunter.hasItemInTreasureList(treasure)) {
-                    System.out.println("You have already collected this treasure");
+            } else {
+                String treasure = currentTown.getTreasure();
+                if(treasure.equals("dust")){
+                    System.out.println("You found dust!");
+                } else if (hunter.hasItemInTreasureList(treasure)){
+                    System.out.println("You have already collected this " + treasure + "!");
                 } else {
-                    if (!treasure.equals("dust")) {
-                        System.out.println("You found a " + Colors.GREEN + treasure + Colors.RESET + "!");
-                        hunter.addTreasures(treasure);
-                        count++;
-                    } else {
-                        System.out.println("You found dust!");
-                        count++;
-                    }
+                    System.out.println("You found a " + treasure + "!");
+                    hunter.addTreasures(treasure);
                 }
+                count = 1;
             }
         } else if (choice.equals("d")) {
             if (countForGold == 1) {
                 System.out.println("You already dug for gold in this town");
-            }
-            if(!hunter.hasItemInKit("Shovel")){
+            } else if(!hunter.hasItemInKit("Shovel")) {
                 System.out.println("You can't dig for gold without a shovel");
-            }
-            while (countForGold < 1 && hunter.hasItemInKit("Shovel")) {
-                double chance = Math.random() * 2 + 1;
-                if (chance == 1) {
+            } else {
+                countForGold = 1;
+                if (Math.random() < 0.5) {
                     int gold = (int) (Math.random() * 20) + 1;
                     System.out.println("You dug up " + gold + " gold!");
                     hunter.changeGold(gold);
-                    countForGold++;
                 } else {
                     System.out.println("You dug but only found dirt");
-                    countForGold++;
                 }
             }
         } else if (choice.equals("x")) {
@@ -207,10 +200,9 @@ public class TreasureHunter {
         if (hunter.hasAllTreasures()){
             System.out.print( ", you have bested this game.");
             System.out.println( "GOOD ENDING");
-        }else{
+        } else {
             System.out.print( ", you are out of money!");
             System.out.println( "BAD ENDING");
         }
     }
-
 }
