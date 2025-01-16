@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.Scanner;
 
 /**
@@ -20,6 +21,7 @@ public class TreasureHunter {
     private boolean samuraiMode;
     private int count = 0;
     private int countForGold = 0;
+    private OutputWindow window = new OutputWindow();
     /**
      * Constructs the Treasure Hunter game.
      */
@@ -45,15 +47,15 @@ public class TreasureHunter {
      * Creates a hunter object at the beginning of the game and populates the class member variable with it.
      */
     private void welcomePlayer() {
-        System.out.println("Welcome to TREASURE HUNTER!");
-        System.out.println("Going hunting for the big treasure, eh?");
-        System.out.print("What's your name, Hunter? ");
+        window.addTextToWindow("\nWelcome to TREASURE HUNTER!", Color.BLACK);
+        window.addTextToWindow("\nGoing hunting for the big treasure, eh?", Color.BLACK);
+        window.addTextToWindow("\nWhat's your name, Hunter?", Color.BLACK);
         String name = SCANNER.nextLine().toLowerCase();
 
         // set hunter instance variable
         hunter = new Hunter(name, 20);
 
-        System.out.print("Hard mode? (y/n/e) OR test: ");
+        window.addTextToWindow("Hard mode? (y/n/e) OR test: ", Color.BLUE);
         String hard = SCANNER.nextLine().toLowerCase();
         if (hard.equals("y")) {
             hardMode = true;
@@ -119,9 +121,10 @@ public class TreasureHunter {
     private void showMenu() {
         String choice = "";
         while (!choice.equals("x") && hunter.getGold() > 0 && !hunter.hasAllTreasures()) {
-            System.out.println();
-            System.out.println(currentTown.getLatestNews());
-                System.out.println("***");
+            window.addTextToWindow("\n", Color.WHITE);
+            String c = currentTown.getLatestNews();
+            window.addTextToWindow(c, Color.BLACK);
+                window.addTextToWindow("\n***", Color.BLACK);
                 System.out.println(hunter.infoString());
                 System.out.println(currentTown.infoString());
                 System.out.println("(B)uy something at the shop.");
