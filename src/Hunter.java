@@ -1,3 +1,5 @@
+import java.awt.*;
+import java.util.*;
 /**
  * Hunter Class<br /><br />
  * This class represents the treasure hunter character (the player) in the Treasure Hunt game.
@@ -155,18 +157,21 @@ public class Hunter {
     /**
      * @return A string representation of the hunter.
      */
-    public String infoString() {
-        String str = hunterName + " has " + Colors.YELLOW + gold + " gold" + Colors.RESET;
+    public void info(OutputWindow window) {
+        window.addTextToWindow(hunterName + " has ", Color.BLACK);
+        window.addTextToWindow(gold + " gold", Color.YELLOW);
         if (!kitIsEmpty()) {
-            str += " and " + Colors.PURPLE + getInventory() + Colors.RESET;
+            window.addTextToWindow(" and ", Color.BLACK);
+            window.addTextToWindow(getInventory(), Color.RED);
         }
         if(!treasuresIsEmpty()){
-            str += "\nyou have collected " + Colors.GREEN + getTreasures() + Colors.RESET;
+            window.addTextToWindow("\nyou have collected ", Color.BLACK);
+            window.addTextToWindow(getTreasures(), Color.GREEN);
         }else{
-            str += "\nyou have collected " + Colors.GREEN + "0" + Colors.RESET + " treasures.";
+            window.addTextToWindow("\nyou have collected ", Color.BLACK);
+            window.addTextToWindow("0 ", Color.GREEN);
+            window.addTextToWindow("treasures", Color.BLACK);
         }
-
-        return str;
     }
 
     /**

@@ -15,7 +15,6 @@ public class Town {
     private boolean toughTown;
     private boolean easyMode;
     private boolean samuraiMode;
-    private OutputWindow window = new OutputWindow();
     /**
      * The Town Constructor takes in a shop and the surrounding terrain, but leaves the hunter as null until one arrives.
      *
@@ -65,21 +64,23 @@ public class Town {
      *
      * @return true if the Hunter was able to leave town.
      */
-    public boolean leaveTown() {
+    public boolean leaveTown(OutputWindow window) {
         boolean canLeaveTown = terrain.canCrossTerrain(hunter);
         if (canLeaveTown) {
             String item = terrain.getNeededItem();
-            printMessage = "You used your " + item + " to cross the " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET + ".";
+            window.addTextToWindow("You used your " + item + " to cross the ", Color.BLACK);
+            window.addTextToWindow(terrain.getTerrainName(), Color.CYAN);
             if(checkItemBreak() && easyMode){
-                printMessage += "\nA powerful force prevents you from losing your " + item + ".";
+                window.addTextToWindow("\nA powerful force prevents you from losing your " + item + ".", Color.BLACK);;
             }else if (checkItemBreak()) {
                 hunter.removeItemFromKit(item);
-                printMessage += "\nUnfortunately, you lost your " + item + ".";
+                window.addTextToWindow("\nUnfortunately, you lost your " + item + ".", Color.BLACK);;
             }
             return true;
         }
 
-        printMessage = "You can't leave town, " + hunter.getHunterName() + ". You don't have a " + terrain.getNeededItem() + ".";
+        window.addTextToWindow("You can't leave town, " + hunter.getHunterName(), Color.BLACK);
+        window.addTextToWindow(". You don't have a " + terrain.getNeededItem() + ".", Color.BLACK);
         return false;
     }
 
@@ -97,7 +98,7 @@ public class Town {
      * The chances of finding a fight and winning the gold are based on the toughness of the town.<p>
      * The tougher the town, the easier it is to find a fight, and the harder it is to win one.
      */
-    public void lookForTrouble() {
+    public void lookForTrouble(OutputWindow window) {
         double noTroubleChance;
         if (toughTown) {
             noTroubleChance = 0.66;
@@ -113,12 +114,14 @@ public class Town {
                 if(hunter.hasItemInKit("sword")){
                     window.addTextToWindow("The braweler, seeing your sword, made him realize that he needs to do better\n", Color.BLACK);
                     window.addTextToWindow("He couldn't win this fight, so he gave you his gold", Color.BLACK);
-                    window.addTextToWindow(("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET), Color.BLACK);
+                    window.addTextToWindow("\nYou won the brawl and receive ", Color.BLACK);
+                    window.addTextToWindow( goldDiff + " gold.", Color.YELLOW);
                     hunter.changeGold(goldDiff);
                     printMessage += "You won, nice.";
                 } else {
                     window.addTextToWindow("Okay, stranger! You proved yer mettle. Here, take my gold.", Color.BLACK);
-                    window.addTextToWindow(("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET), Color.BLACK);
+                    window.addTextToWindow("\nYou won the brawl and receive ", Color.BLACK);
+                    window.addTextToWindow( goldDiff + " gold.", Color.YELLOW);
                     hunter.changeGold(goldDiff);
                     printMessage += "You won, nice.";
                 }
@@ -126,12 +129,14 @@ public class Town {
                 if(hunter.hasItemInKit("Sword")){
                     window.addTextToWindow("The braweler, seeing your sword, made him realize that he needs to do better\n", Color.BLACK);
                     window.addTextToWindow("He couldn't win this fight, so he gave you his gold", Color.BLACK);
-                    window.addTextToWindow(("\nYou won the brawl and receive " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET), Color.BLACK);
+                    window.addTextToWindow("\nYou won the brawl and receive ", Color.BLACK);
+                    window.addTextToWindow( goldDiff + " gold.", Color.YELLOW);
                     hunter.changeGold(goldDiff);
                     printMessage += "You won, nice.";
                 } else {
                     window.addTextToWindow("That'll teach you to go lookin' fer trouble in MY town! Now pay up!", Color.BLACK);
-                    window.addTextToWindow(("\nYou lost the brawl and pay " + Colors.YELLOW + goldDiff + " gold." + Colors.RESET), Color.BLACK);
+                    window.addTextToWindow("\nYou lost the brawl and lost ", Color.BLACK);
+                    window.addTextToWindow( goldDiff + " gold.", Color.YELLOW);
                     hunter.changeGold(-goldDiff);
                     printMessage += "\n You're weak.";
                 }
@@ -154,8 +159,10 @@ public class Town {
         return treasure;
     }
     
-    public String infoString() {
-        return "This nice little town is surrounded by " + Colors.CYAN + terrain.getTerrainName() + Colors.RESET + ".";
+    public void info(OutputWindow window) {
+        window.addTextToWindow("\nThis nice little town is surrounded by ", Color.BLACK);
+        window.addTextToWindow(terrain.getTerrainName(), Color.CYAN);
+        window.addTextToWindow(".", Color.BLACK);
     }
 
     /**
@@ -164,7 +171,7 @@ public class Town {
      * @return A Terrain object.
      */
     private Terrain getNewTerrain() {
-        double rnd = Math.random() * 6 + 1;
+        int rnd = (int) (Math.random() * 6) + 1;
         if (rnd == 1) {
             return new Terrain("Mountains", "Rope");
         } else if (rnd == 2) {

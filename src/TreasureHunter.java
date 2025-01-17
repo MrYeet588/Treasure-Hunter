@@ -55,7 +55,7 @@ public class TreasureHunter {
 
         // set hunter instance variable
         hunter = new Hunter(name, 20);
-
+        window.clear();
         window.addTextToWindow("Hard mode? (y/n/e) OR test: ", Color.BLUE);
         String hard = SCANNER.nextLine().toLowerCase();
         if (hard.equals("y")) {
@@ -126,10 +126,11 @@ public class TreasureHunter {
             String c = currentTown.getLatestNews();
             window.addTextToWindow(c, Color.BLACK);
             window.addTextToWindow("\n***", Color.BLACK);
-            String h = hunter.infoString();
-            window.addTextToWindow(h, Color.BLACK);
-            String c1 = currentTown.infoString();
-            window.addTextToWindow(c1, Color.BLACK);
+            hunter.info(window);
+//            window.addTextToWindow(hunter.info(), Color.BLACK);
+
+            currentTown.info(window);
+//            window.addTextToWindow(currentTown.info(), Color.BLACK);
             window.addTextToWindow("\n(B)uy something at the shop.", Color.BLACK);
             window.addTextToWindow("\n(S)ell something at the shop.", Color.BLACK);
             window.addTextToWindow("\n(E)xplore surrounding terrain.", Color.BLACK);
@@ -142,6 +143,7 @@ public class TreasureHunter {
             window.addTextToWindow("What's your next move? ", Color.BLACK);
             choice = SCANNER.nextLine().toLowerCase();
             processChoice(choice);
+
         }
         end();
     }
@@ -151,13 +153,14 @@ public class TreasureHunter {
      * @param choice The action to process.
      */
     private void processChoice(String choice) {
+        window.clear();
         if (choice.equals("b") || choice.equals("s")) {
             currentTown.enterShop(choice);
         } else if (choice.equals("e")) {
             String explore = currentTown.getTerrain().infoString();
             window.addTextToWindow(explore, Color.BLACK);
         } else if (choice.equals("m")) {
-            if (currentTown.leaveTown()) {
+            if (currentTown.leaveTown(window)) {
                 // This town is going away so print its news ahead of time.
                 String c3 = currentTown.getLatestNews();
                 window.addTextToWindow(c3, Color.BLACK);
@@ -166,7 +169,7 @@ public class TreasureHunter {
                 countForGold = 0;
             }
         } else if (choice.equals("l")) {
-            currentTown.lookForTrouble();
+            currentTown.lookForTrouble(window);
         } else if (choice.equals("h")) {
             if (count == 1) {
                 window.addTextToWindow("\nYou have already searched this town", Color.BLACK);
@@ -185,7 +188,7 @@ public class TreasureHunter {
         } else if (choice.equals("d")) {
             if (countForGold == 1) {
                 window.addTextToWindow("\nYou already dug for gold in this town", Color.BLACK);
-            } else if(!hunter.hasItemInKit("Shovel")) {
+            } else if(!hunter.hasItemInKit("shovel")) {
                 window.addTextToWindow("\nYou can't dig for gold without a shovel", Color.BLACK);
             } else {
                 countForGold = 1;

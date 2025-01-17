@@ -52,7 +52,7 @@ public class Shop {
         if (buyOrSell.equals("b")) {
             window.addTextToWindow("\nWelcome to the shop! We have the finest wares in town.", Color.BLACK);
             window.addTextToWindow("\nCurrently we have the following items:", Color.BLACK);
-            window.addTextToWindow(inventory(), Color.BLACK);
+            window.addTextToWindow("\n" + inventory(), Color.BLACK);
             window.addTextToWindow("\nWhat're you lookin' to buy? ", Color.BLUE);
             String item = SCANNER.nextLine().toLowerCase();
             int cost = checkMarketPrice(item, true);
@@ -64,7 +64,9 @@ public class Shop {
                         buyItem(item);
                     }
                 } else {
-                    window.addTextToWindow("\nIt'll cost you " + cost + " gold. Buy it (y/n)? ", Color.BLUE);
+                    window.addTextToWindow("\nIt'll cost you ", Color.BLUE);
+                    window.addTextToWindow(cost + " gold", Color.YELLOW);
+                    window.addTextToWindow(". Buy it (y/n)?", Color.BLUE);
                     String option = SCANNER.nextLine().toLowerCase();
                     if (option.equals("y")) {
                         buyItem(item);
@@ -72,7 +74,10 @@ public class Shop {
                     window.addTextToWindow("\nWe ain't got none of those.", Color.BLUE);
                 }
             } else {
-                window.addTextToWindow(("\nIt'll cost you " + Colors.YELLOW + cost + " gold" + Colors.RESET + ". Buy it (y/n)? "), Color.BLUE);
+                window.addTextToWindow("\nIt'll cost you ", Color.BLUE);
+                window.addTextToWindow(cost + " gold", Color.YELLOW);
+                window.addTextToWindow(". Buy it (y/n)?", Color.BLUE);
+//                window.addTextToWindow(("\nIt'll cost you " + Colors.YELLOW + cost + " gold" + Colors.RESET + ". Buy it (y/n)? "), Color.BLUE);
                 String option = SCANNER.nextLine().toLowerCase();
                 if (option.equals("y")) {
                     buyItem(item);
@@ -93,7 +98,9 @@ public class Shop {
                 }
             }
         }
+        window.clear();
         return "You left the shop";
+
     }
 
     /**
