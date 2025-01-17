@@ -146,7 +146,7 @@ public class Town {
 
     public String getTreasure(){
         String treasure = "";
-        double num = Math.random() * 4 + 1;
+        int num = (int) (Math.random() * 4) + 1;
         if (num == 1){
             treasure = "crown";
         } else if (num == 2){
